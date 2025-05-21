@@ -9,13 +9,6 @@ const Home = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const messagesContainerRef = useRef<HTMLDivElement>(null);
 
-    // Auto-scroll to bottom when messages change
-    useEffect(() => {
-        if (messagesContainerRef.current) {
-            messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
-        }
-    }, [messages]);
-
     const handleSearch = (query: string) => {
         console.log(query);
         // Add user message
@@ -219,6 +212,18 @@ const Home = () => {
                 msg.id === messageId ? { ...msg, isTyping: false } : msg
             )
         );
+
+        if (messagesContainerRef.current) {
+            messagesContainerRef.current.scrollTo({
+                top: messagesContainerRef.current.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+    };
+
+    const handleQuestionClick = (question: string) => {
+        console.log(question);
+        handleSearch(question);
     };
 
     return (
@@ -230,6 +235,7 @@ const Home = () => {
                 <ChatComponent
                     messages={messages}
                     onTypingEnd={handleTypingEnd}
+                    onQuestionClick={handleQuestionClick}
                 />
             </div>
 

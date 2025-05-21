@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { ChartNoAxesColumn, ChartNoAxesGantt, DecimalsArrowRight, PlusIcon } from 'lucide-react';
+import { cn } from '../lib/utils';
 
 interface FollowUpQuestionListProps {
   questions: string[];
@@ -19,7 +20,9 @@ const FollowUpQuestionList = ({ questions, onQuestionClick }: FollowUpQuestionLi
         {questions.map((question, index) => (
           <li 
             key={index} 
-            className="border-b border-white/10 group flex items-center justify-between p-2 rounded-md text-white hover:bg-[#1a1a1a] cursor-pointer transition-colors"
+            className={cn("border-b border-white/10 group flex items-center justify-between p-2 text-white hover:bg-[#1a1a1a] cursor-pointer transition-colors", {
+                "border-b-0": index === questions.length - 1
+            })}
             onClick={() => onQuestionClick?.(question)}
           >
             <span className="text-sm">{question}</span>
