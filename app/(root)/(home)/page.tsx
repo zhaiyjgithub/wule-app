@@ -239,7 +239,7 @@ const Home = () => {
                 />
             </div>
 
-            <Searchbar onSearch={handleSearch} />
+            <Searchbar onSearch={handleSearch} isLoading={false}  />
 
         </section>
     )

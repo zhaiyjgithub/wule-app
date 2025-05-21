@@ -13,8 +13,13 @@ interface ReferenceItemProps {
 const ReferenceItem = ({ icon, snippet, title, link }: ReferenceItemProps) => {
     // get hostname from link
     const hostname = link ? new URL(link).hostname : '';
+    const onClick = () => {
+        if (link) {
+            window.open(link, '_blank');
+        }
+    }
     return (
-        <div className="flex flex-col gap-3 bg-[#101010] rounded-lg px-3 py-2 text-sm cursor-pointer hover:bg-[#1a1a1a] transition-colors">
+        <div onClick={onClick} className="flex flex-col gap-3 bg-[#101010] rounded-lg px-3 py-2 text-sm cursor-pointer hover:bg-[#1a1a1a] transition-colors">
             <div className="flex items-center gap-x-1 w-full">
                 {icon && (
                     <div className="w-4 h-4 rounded-full bg-white/10 flex items-center justify-center overflow-hidden flex-shrink-0">

@@ -12,7 +12,7 @@ export interface Reference {
 
 interface ReferenceListProps {
   references: Array<Reference>;
-}
+}   
 
 const ReferenceList = ({ references }: ReferenceListProps) => {
   return (

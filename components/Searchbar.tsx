@@ -1,20 +1,21 @@
 'use client'
 
 import { cn } from "../lib/utils";
-import { ArrowUp, SearchIcon } from "lucide-react";
+import { ArrowUp, Loader, SearchIcon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
 
 interface SearchbarProps {
+    isLoading?: boolean;
     onSearch: (query: string) => void;
 }
 
-const Searchbar = ({ onSearch }: SearchbarProps) => {
+const Searchbar = ({ onSearch, isLoading }: SearchbarProps) => {
     const [isMultiline, setIsMultiline] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
 
     const handleSearch = () => {
-        if (searchQuery.trim()) {
+        if (!isLoading && searchQuery.trim()) {
             onSearch(searchQuery);
             setSearchQuery("");
         }
@@ -38,7 +39,11 @@ const Searchbar = ({ onSearch }: SearchbarProps) => {
                     })}
                     onClick={handleSearch}
                 >
-                    <ArrowUp className="w-4 h-4 text-[#13C2C2]" />
+                    {isLoading ? (
+                        <Loader className="w-4 h-4 text-[#13C2C2] animate-spin" />
+                    ) : (
+                        <ArrowUp className="w-4 h-4 text-[#13C2C2]" />
+                    )}
                 </div>
             </div>
             <textarea
@@ -66,13 +71,19 @@ const Searchbar = ({ onSearch }: SearchbarProps) => {
 
             <Button
                 variant="outline"
-                disabled={searchQuery.trim() === ""}
-                className={cn(`flex items-center justify-center w-10 h-8 rounded-lg bg-[#0d5c5c] cursor-pointer hover:bg-[#0d5c5c]/80`, {
-                    'hidden': isMultiline
+                disabled={isLoading || searchQuery.trim() === ""}
+                className={cn(`flex items-center justify-center w-10 h-8 rounded-lg cursor-pointer hover:bg-[#0d5c5c]/80`, {
+                    'hidden': isMultiline,
+                    'bg-[#0d5c5c] ': !isLoading,
+                    'bg-white': isLoading,
                 })}
                 onClick={handleSearch}
             >
-                <ArrowUp className="w-4 h-4 text-[#13C2C2]" />
+                {isLoading ? (
+                        <Loader className="w-4 h-4 text-black animate-spin" />
+                    ) : (
+                        <ArrowUp className="w-4 h-4 text-[#13C2C2]" />
+                    )}
             </Button>
         </div>
     )

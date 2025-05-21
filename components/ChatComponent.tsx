@@ -96,7 +96,7 @@ interface ChatComponentProps {
     onQuestionClick?: (question: string) => void;
 }
 
-const ChatComponent: React.FC<ChatComponentProps> = ({ messages, onTypingEnd, onQuestionClick }) => {
+const ChatComponent: React.FC<ChatComponentProps> = ({ messages, isLoading, onTypingEnd, onQuestionClick }) => {
     return (
         <div className="w-full flex flex-col gap-2 items-start gap-y-4">
             {messages.map((msg) => {
