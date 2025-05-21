@@ -26,7 +26,7 @@ const TypingEffect: React.FC<TypingEffectProps> = ({ text, onComplete }) => {
     return () => clearInterval(interval);
   }, [text]);
 
-  return <p className="text-white">{displayedText}</p>;
+  return <p className="text-white pr-2">{displayedText}</p>;
 };
 
 export default TypingEffect;

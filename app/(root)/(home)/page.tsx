@@ -9,7 +9,22 @@ const Home = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const messagesContainerRef = useRef<HTMLDivElement>(null);
 
-    const handleSearch = (query: string) => {
+    // fetch data from api
+    const fetchData = async () => {
+        const response = await fetch('http://localhost:8000/ask', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ question: "sdsf" }),
+            mode: "cors", // 允许跨域
+          });
+          const data = await response.json();
+          console.log(data);
+    }
+    
+
+    const handleSearch = async (query: string) => {
         console.log(query);
         // Add user message
         const userMessage: Message = {
@@ -20,180 +35,135 @@ const Home = () => {
         };
         setMessages(prev => [...prev, userMessage]);
 
+        // await fetchData();
+
         // Add AI message with typing effect
         setTimeout(() => {
             // 这里添加fake 的ai 回复
-            const aiContent: AiResult = {
-                title: "AI Result",
-                answer: "This is a fake AI result",
-                followUpQuestions: ["Question 1", "Question 2", "Question 3"],
-                inline_images: [
+            const fakeApiResult = {
+                "answer": "英国第一季度经济环比增长0.7%，超出市场预期，主要得益于服务业和制造业的强劲表现。服务业增长范围广泛，包括批发、零售、交通、计算机编程等领域，而制造业则受到汽车和机械制造的推动。然而，这种增长势头可能难以持续，因为建筑业未见增长，且美国加征关税的影响将在第二季度显现。此外，英国国内的国民保险税率上调、最低工资上涨和社会服务价格上涨等因素也可能抑制未来的经济增长。多家经济研究机构已下调英国全年经济增长预期至1%左右。尽管如此，英国政府正试图通过产业战略和基础设施规划来刺激经济，同时加强与欧盟的贸易关系被视为重要方向。未来几个月，英国需应对内外部压力，包括关税战、就业成本上升及全球经济的不确定性。",
+                "follow_up_questions": [
+                    "英国第一季度经济增长的主要驱动力是什么?",
+                    "美国加征关税对英国经济的具体影响何时显现?",
+                    "英国政府采取了哪些措施来推动经济增长?",
+                    "为什么多家研究机构认为英国经济增速不可持续?",
+                    "英国与欧盟加强贸易关系的背景和意义是什么?"
+                ],
+                "error": null,
+                "inline_images": [
                     {
-                        "source":
-                            "https://you.ctrip.com/travels/100021/3978335.html",
-                        "thumbnail":
-                            "https://serpapi.com/searches/682c56d797f1cc641cde68cd/images/73a8d98e72b88d88a3e0c8169812fda7ce0126615e90cd2880caa71fcc9bf0a0.jpeg",
-                        "original":
-                            "https://dimg04.c-ctrip.com/images/01065120008762oht6A82_W_640_0_Q90.jpg?proc=autoorient",
-                        "title":
-                            "评价泰国的10个品牌的咖啡，哪个品牌最好喝，让我们打开一起看 ...",
-                        "source_name":
-                            "you.ctrip.com - 携程"
+                        "source": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2025-04-11/doc-inesusvu1575766.shtml",
+                        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4C5XUfX-liSE1F_L_X-JeG1SyYsUvHoa1bei_MqUkfzSmaEFDo33iYNU&s",
+                        "original": "https://n.sinaimg.cn/sinakd20250411s/561/w786h575/20250411/fd9a-1b618d1adaa24bee90f73b66e3b0bf58.png",
+                        "title": "英国经济意外反弹2月GDP增长0.5%超预期",
+                        "source_name": "新浪财经"
                     },
                     {
-                        "source":
-                            "https://you.ctrip.com/travels/100021/3978335.html",
-                        "thumbnail":
-                            "https://serpapi.com/searches/682c56d797f1cc641cde68cd/images/73a8d98e72b88d8871c2626b2ef22cb6bde4db2110a1f5fa4b7a6eb7e0edf462.jpeg",
-                        "original":
-                            "https://dimg04.c-ctrip.com/images/0105i120008762dwx7B6D_W_640_0_Q90.jpg?proc=autoorient",
-                        "title":
-                            "评价泰国的10个品牌的咖啡，哪个品牌最好喝，让我们打开一起看 ...",
-                        "source_name":
-                            "you.ctrip.com - 携程"
+                        "source": "https://news.qq.com/rain/a/20250515A066XJ00",
+                        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR43VYROENzXb1s4wLdEvdepHwnIlGxLdGmPJOjpg1nmTOJwotvfCZmhVQ&s",
+                        "original": "https://inews.gtimg.com/om_bt/ObTdlhphazoXdjVEU0Fqe2AUGbpaoqg8ypiEQ82gLyLp0AA/641",
+                        "title": "英国经济实现一年最强季度增长未来前景仍不乐观-腾讯新闻",
+                        "source_name": "腾讯新闻"
                     },
                     {
-                        "source":
-                            "https://www.sayweee.com/zh/grocery-near-me/chinese-lang/explore/%E6%B3%B0%E5%9B%BD%E5%92%96%E5%95%A1",
-                        "thumbnail":
-                            "https://serpapi.com/searches/682c56d797f1cc641cde68cd/images/73a8d98e72b88d8879a24c1cdf4ad20f6c9b5c202930ea78c553de1deacb70f0.jpeg",
-                        "original":
-                            "https://img06.weeecdn.com/item/image/993/682/521C6C4AAA475C8C.jpeg!c750x0.jpeg",
-                        "title":
-                            "购买我附近的泰国咖啡免费送货",
-                        "source_name":
-                            "Weee!"
+                        "source": "https://www.hawkinsight.com/article/BBu4e",
+                        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIw7W1jNibxRQikVw34GwJvzbifp6uZro5ra_PFbEJcD1Vce9vNz9JfYM&s",
+                        "original": "https://www.tradingpedia.com/wp-content/uploads/2025/05/Screenshot-from-2025-05-15-09-24-10.webp",
+                        "title": "英国GDP第一季度增长0.7%，英镑/美元上涨0.3%英国GDP第一季度 ...",
+                        "source_name": "Hawk Insight"
                     },
                     {
-                        "source":
-                            "https://zhuanlan.zhihu.com/p/496539673",
-                        "thumbnail":
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNmds9t1PP2NN5REhNKL2kcbcs6Kcm_CgEmzRt0ACLWnZT9f3gDzOHgck&s",
-                        "original":
-                            "https://pic1.zhimg.com/v2-6a86e9540e1953e64f76f82563f0f09c_1440w.jpg",
-                        "title":
-                            "品尝10个泰国咖啡，到底哪个品牌好喝，哪个品牌不好喝呢？我们来 ...",
-                        "source_name":
-                            "知乎专栏"
+                        "source": "http://www.shangbaoindonesia.com/read/2025/05/15/berita-luar-negeri-1747323388",
+                        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ91S7Gz3R8xzxiLkiF4n2SoMoFxS4q70hewZ25NFQ94JOWmbpcjb53DtY&s",
+                        "original": "https://sb-a16y6q7k5z00x2.s3.ap-southeast-1.amazonaws.com/news_images/47/82005/1.jpg",
+                        "title": "英国一季度GDP环比增长0.7% - Shangbao Indonesia",
+                        "source_name": "Shangbao Indonesia"
                     },
                     {
-                        "source":
-                            "https://www.taobao.com/list/product/top-rated/%E6%B3%B0%E5%9B%BD%E5%92%96%E5%95%A1.htm",
-                        "thumbnail":
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS34PGGj1SayLBeq2PxjokTqY3jTueVqR9AF_YSiln-V5ZR837WCZw2ClY&s",
-                        "original":
-                            "https://gw.alicdn.com/imgextra/i2/2601103972/O1CN01UjcCIX1fDEBzswqa4_!!2601103972.jpg_300x300Q75.jpg_.webp",
-                        "title":
-                            "泰国咖啡2025年5月-月销口碑最新推荐-Taobao",
-                        "source_name":
-                            "Taobao.com"
+                        "source": "https://www.moomoo.com/hans/news/post/53076288/the-united-kingdom-s-economy-achieved-its-strongest-quarterly-growth",
+                        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2bHh4TI5XEBG8Pspi77kVmtwJO8Y69-by9ZWPrx0HqPZdKm7h6h0rDbA&s",
+                        "original": "https://usnewsfile.moomoo.com/public/MM-PersistNewsContentImage/7781/20250515/0-f48fb4fad8fd021ba8892a3a9620e3b1-1-f255b37f101c03a504fe99141f9b90d2.png/big",
+                        "title": "英国经济实现一年最强季度增长未来前景仍不乐观",
+                        "source_name": "Moomoo"
                     },
                     {
-                        "source":
-                            "https://search.suning.com/236s2.html",
-                        "thumbnail":
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXY4K2ddeX2P985Z8pq2yUVPz853bKpuyZ0o55CmRY-QYlOSPUTZ55eno&s",
-                        "original":
-                            "https://imgservice1.suning.cn/uimg1/b2c/image/9wDL9mN3AvnpqdKh8GBHQA.jpg_300w_300h_4e",
-                        "title":
-                            "泰国咖啡价格_报价_促销_图片_多少钱-苏宁易购手机版",
-                        "source_name":
-                            "苏宁易购(Suning)"
+                        "source": "https://www.zaobao.com.sg/realtime/world/story20250430-6271529",
+                        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2reAgREYsjS7rgiXF4Y87-MfNpvSeTcNx5tRHYS1TAzfg1a-8l6XRK4c&s",
+                        "original": "https://cassette.sphdigital.com.sg/image/zaobao/dbbc9877c982d279c3a3f614982a9b94db837a999f89ad858e6c060af09fd083",
+                        "title": "美国第一季度经济环比萎缩0.3% | 联合早报",
+                        "source_name": "联合早报"
                     },
                     {
-                        "source":
-                            "http://www.jd.com/chanpin/418208.html",
-                        "thumbnail":
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIwn_Lbniipv4QRzQ1OvoPx-sKFqG7qzcYSH4WGp6m0hhJJhJtoGZ2ahw&s",
-                        "original":
-                            "http://img14.360buyimg.com/n7/jfs/t1/223875/11/29281/233514/66050221F8e7f847c/c554e32f93d0335f.jpg",
-                        "title":
-                            "泰国咖啡】价格_泰国咖啡图片- 京东",
-                        "source_name":
-                            "JD.com"
+                        "source": "https://zh.tradingeconomics.com/united-kingdom/gdp-growth-annual",
+                        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToi16YUxLzgv5wONfn6lvYslTEKB-oZq0HFwuU92kvIvX2UwNIl1vCcvM&s",
+                        "original": "https://d3fy651gv2fhd3.cloudfront.net/charts/united-kingdom-gdp-growth-annual.png?s=ukgrybzy&v=202505150714V20230410&lang=all&h=400&w=640&lbl=0&ismobile=1",
+                        "title": "英国- 国内生产总值年增长率| 1956-2025 数据| 2026-2027 预测",
+                        "source_name": "经济指标"
                     },
                     {
-                        "source":
-                            "https://www.sayweee.com/zh/grocery-near-me/chinese-lang/explore/%E6%B3%B0%E5%9B%BD%E5%92%96%E5%95%A1",
-                        "thumbnail":
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYDCoClLWNfHzXhFYyHyZ90HH-zE6_Hz63wUX7utNN0qMiYj3NwkVnoSI&s",
-                        "original":
-                            "https://img06.weeecdn.com/item/image/802/963/54DC0AD1E883FE8A.png!c750x0.jpeg",
-                        "title":
-                            "购买我附近的泰国咖啡免费送货",
-                        "source_name":
-                            "Weee!"
+                        "source": "https://www.yicai.com/news/102472878.html",
+                        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbYFLvYPnRMAzG3ZRwKwBkGfgdK5NYvQUsiHIE3Qf_1c4Ffkt-3pQRMyo&s",
+                        "original": "https://imgcdn.yicai.com/vms-new/2025/02/999e8e3a-b294-45d2-8100-04e8a12a16a8_fPHk.jpg",
+                        "title": "英智库：预计今年英国经济增长1.5%，特朗普关税将带来负面影响",
+                        "source_name": "第一财经"
                     },
                     {
-                        "source":
-                            "https://mobile-phone.taobao.com/chanpin/3160efaf5277fa4b5d0b52ef30f307f4.html",
-                        "thumbnail":
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTUkN90CdIxKLM94mtQAKUXyCbq5JSZK7q2Cg1ew8tXk-l4xIogRJKdJM&s",
-                        "original":
-                            "https://g-search3.alicdn.com/img/bao/uploaded/i4/i1/2217280099980/O1CN011IHydr2NatmWjiXuI_!!4611686018427385484-0-item_pic.jpg_360x360q90.jpg_.webp",
-                        "title":
-                            "泰国咖啡粉-泰国咖啡粉促销价格、泰国咖啡粉品牌- 淘宝",
-                        "source_name":
-                            "Taobao"
+                        "source": "https://www.etnet.com.hk/mobile/tc/news/topic_news_detail.php?newsid=153541&category=special",
+                        "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFTuGAszwb0Zr-xqOqubHUgBEb4w7ncTHBjhFDHFBaOdWEVKQ-VzCIrL0&s",
+                        "original": "https://img.etnet.com.hk/column/images/stories/368/2025/04/tht20250430.jpg",
+                        "title": "經濟數據| 英國2025年首季GDP增長0.7%，優於預期- 新聞- etnet ...",
+                        "source_name": "etnet 經濟通"
                     }
                 ],
-                original_results: [
+                "organic_results": [
                     {
-                        "position":
-                            1,
-                        "title":
-                            "东南亚咖啡之旅-泰国咖啡文化",
-                        "link":
-                            "https://zhuanlan.zhihu.com/p/654428994",
-                        "redirect_link":
-                            "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://zhuanlan.zhihu.com/p/654428994&ved=2ahUKEwituYuB6bGNAxUAvokEHQSWEfAQFnoECB4QAQ&usg=AOvVaw0l2Gp-LIJe2UjJhxjBOb7y",
-                        "displayed_link":
-                            "https://zhuanlan.zhihu.com › ...",
-                        "thumbnail":
-                            "https://serpapi.com/searches/682c56d797f1cc641cde68cd/images/b2f903e73642bb0740718557c2a00c7e3274153cbf05ddd165dd4a87ee74f6f8.jpeg",
-                        "favicon":
-                            "https://serpapi.com/searches/682c56d797f1cc641cde68cd/images/b2f903e73642bb0740718557c2a00c7e32d6270916634dd5fe17577d5e3f9409.png",
-                        "snippet":
-                            "泰国的大部分农业用地都用于咖啡种植，清迈被称为泰国的咖啡之都。 1. 泰国拥有丰富而充满活力的咖啡文化，历史跨越了几个世纪。 2. 该国提供多种咖啡 ...",
-                        "snippet_highlighted_words":
-                            [
-                                "泰国",
-                                "咖啡",
-                                "泰国",
-                                "咖啡",
-                                "泰国",
-                                "咖啡",
-                                "咖啡"
-                            ],
-                        "source":
-                            "知乎专栏"
+                        "position": 1,
+                        "title": "英国一季度经济环比增长0.7%",
+                        "link": "https://finance.sina.com.cn/jjxw/2025-05-15/doc-inewrzcv9339109.shtml?froms=ggmp",
+                        "snippet": "5月15日英国家统计局公布，今年第一季度英国内生产总值环比增长0.7%超预期。其中服务业环比增长0.7%，制造业环比增长1.1%，建筑业环比持平。3月经济环比 ...",
+                        "displayLink": "https://finance.sina.com.cn › jjxw",
+                        "date": "4 days ago",
+                        "source": "新浪财经",
+                        "favicon": "https://serpapi.com/searches/682b2badfda6074a8e9f5808/images/4dac903a18300d91bb0706214ee8f1a76af078e169cc79d5e536273163fca236.jpeg"
                     },
                     {
-                        "position":
-                            3,
-                        "title":
-                            "购买我附近的泰国咖啡免费送货",
-                        "link":
-                            "https://www.sayweee.com/zh/grocery-near-me/chinese-lang/explore/%E6%B3%B0%E5%9B%BD%E5%92%96%E5%95%A1",
-                        "redirect_link":
-                            "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.sayweee.com/zh/grocery-near-me/chinese-lang/explore/%25E6%25B3%25B0%25E5%259B%25BD%25E5%2592%2596%25E5%2595%25A1&ved=2ahUKEwituYuB6bGNAxUAvokEHQSWEfAQFnoECCMQAQ&usg=AOvVaw3TSBI6ZnetnT8ekaeoaT51",
-                        "displayed_link":
-                            "https://www.sayweee.com › explore",
-                        "thumbnail":
-                            "https://serpapi.com/searches/682c56d797f1cc641cde68cd/images/b2f903e73642bb0740718557c2a00c7e26e15e0729fc5901c7a9a70f010ed3c9.jpeg",
-                        "favicon":
-                            "https://serpapi.com/searches/682c56d797f1cc641cde68cd/images/b2f903e73642bb0740718557c2a00c7e9f89f5043233f6c472435050fdfdbbe8.png",
-                        "snippet":
-                            "Weee!提供全美范围内的低门槛免运费服务。在线订购泰国咖啡，享受最快次日达的免接触送货上门服务。我们的平台不加价，通常会比普通零售店的价格更优惠。千万家庭信赖的Weee!",
-                        "snippet_highlighted_words":
-                            [
-                                "泰国咖啡"
-                            ],
-
-                        "source":
-                            "Weee!"
+                        "position": 2,
+                        "title": "英国一季度经济增速超预期，但不可持续成共识",
+                        "link": "https://www.custeel.com/reform/view.mv?group=&articleID=7962456",
+                        "snippet": "英国国家统计局15日公布的数据显示，今年第一季度英国经济环比实现0.7%的增长。 此前已经公布的数据显示，1月份，英国经济零增长，2月份经济增长0.5%。 此前 ...",
+                        "displayLink": "https://www.custeel.com › view",
+                        "date": "3 days ago",
+                        "source": "中国联合钢铁网",
+                        "favicon": "https://serpapi.com/searches/682b2badfda6074a8e9f5808/images/4dac903a18300d91bb0706214ee8f1a7b7f2e8b259eeb39ad6d292759f906657.png"
                     },
+                    {
+                        "position": 3,
+                        "title": "英国第一季度经济增长超预期；GDP增长0.7%",
+                        "link": "https://cn.investing.com/news/economic-indicators/article-2807730",
+                        "snippet": "英国国家统计局周四早些时候发布的数据显示，2025年1月至3月期间，英国国内生产总值增长0.7%，相比2024年10月至12月期间仅0.1%的微弱增长有显著提升，且高于 ...",
+                        "displayLink": "https://cn.investing.com › news",
+                        "date": "4 days ago",
+                        "source": "英为财情 Investing.com",
+                        "favicon": "https://serpapi.com/searches/682b2badfda6074a8e9f5808/images/4dac903a18300d91bb0706214ee8f1a7747215428f8da3ab85855a14952ce24a.jpeg"
+                    },
+                    {
+                        "position": 4,
+                        "title": "英国2025年第一季度国内生产总值环比增长0.7%",
+                        "link": "https://hqtime.huanqiu.com/article/4MghT4ow9Nx",
+                        "snippet": "当地时间5月15日，英国国家统计局公布的最新数据显示，英国2025年第一季度国内生产总值环比增长0.7%。（总台记者陈林聪）.",
+                        "displayLink": "https://hqtime.huanqiu.com › article",
+                        "date": "4 days ago",
+                        "source": "环球网",
+                        "favicon": "https://serpapi.com/searches/682b2badfda6074a8e9f5808/images/4dac903a18300d91bb0706214ee8f1a7c8a4f030c1c465ecf4ade41f363f2568.png"
+                    }
                 ]
+            }
+            const aiContent: AiResult = {
+                title: "",
+                answer: fakeApiResult.answer,
+                followUpQuestions: fakeApiResult.follow_up_questions,
+                inline_images: fakeApiResult.inline_images,
+                original_results: fakeApiResult.organic_results,
             };
             const aiMessage: Message = {
                 id: (Date.now() + 1).toString(),
@@ -221,9 +191,9 @@ const Home = () => {
         }
     };
 
-    const handleQuestionClick = (question: string) => {
+    const handleQuestionClick = async (question: string) => {
         console.log(question);
-        handleSearch(question);
+        await handleSearch(question);
     };
 
     return (

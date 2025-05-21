@@ -61,17 +61,11 @@ export interface InlineImage {
 */
 
 export interface OriginalResult {
-    position: number;
     title: string;
     link: string;
-    redirect_link: string;
-    displayed_link: string;
-    thumbnail: string;
     favicon: string;
     snippet: string;
-    snippet_highlighted_words: string[];
     source: string;
-
 }
 
 export interface AiResult {
@@ -96,7 +90,7 @@ interface ChatComponentProps {
     onQuestionClick?: (question: string) => void;
 }
 
-const ChatComponent: React.FC<ChatComponentProps> = ({ messages, isLoading, onTypingEnd, onQuestionClick }) => {
+const ChatComponent: React.FC<ChatComponentProps> = ({ messages, onTypingEnd, onQuestionClick }) => {
     return (
         <div className="w-full flex flex-col gap-2 items-start gap-y-4">
             {messages.map((msg) => {
@@ -109,7 +103,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ messages, isLoading, onTy
                 return (
                     <div key={msg.id} className="w-full">
                         {msg.sender === "ai" ? (
-                            <div className="w-full flex flex-col items-start gap-y-4 pb-4 border-b border-white/10">
+                            <div className="w-full flex flex-col items-start gap-y-8 pb-4 border-b border-white/10">
                                 <div className="w-full flex flex-col items-start gap-y-4">
                                     <ReferenceList references={references} />
                                     {msg.aiContent?.inline_images?.length > 0 && (
@@ -131,9 +125,8 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ messages, isLoading, onTy
                                 {!msg.isTyping && <FollowUpQuestionList questions={msg.aiContent.followUpQuestions} onQuestionClick={onQuestionClick} />}
                             </div>
                         ) : (
-                            <div className="flex items-center justify-start pt-8">
-                                {/* rgb: 38 38 38 */}
-                                <p className="bg-[#262626] text-3xl text-white py-2 px-4 rounded-2xl max-w-[80%]">{msg.content}</p>
+                            <div className="flex items-center justify-start pt-8 pb-4">
+                                <p className=" text-3xl text-white py-2 rounded-2xl max-w-[80%]">{msg.content}</p>
                             </div>
                         )}
                     </div>
