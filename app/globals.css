@@ -137,3 +137,22 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Ensure sticky components stay on top */
+.sticky-wrapper {
+  position: relative;
+  z-index: 50 !important;
+}
+
+/* Create proper stacking context */
+.sticky-header {
+  position: relative;
+  z-index: 50;
+  isolation: isolate;
+}
+
+/* Lower z-index for content that should stay below */
+.content-layer {
+  position: relative;
+  z-index: 0;
+}

@@ -4,6 +4,7 @@ import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { InlineImage } from './ChatComponent';
+import Sticky from 'react-sticky-el';
 
 interface InlineImageListProps {
   images: InlineImage[];
@@ -34,16 +35,16 @@ const InlineImageList = ({ images, onImageClick }: InlineImageListProps) => {
   if (!images || images.length === 0) return null;
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full z-0">
       <div 
         ref={scrollRef}
-        className="flex overflow-x-auto gap-3 no-scrollbar scroll-smooth"
+        className="flex overflow-x-auto gap-3 no-scrollbar scroll-smooth relative z-0"
         style={{ scrollbarWidth: 'none' }}
       >
         {images.map((image, index) => (
           <div 
             key={index} 
-            className="min-w-[260px] h-[150px] flex-shrink-0 rounded-lg overflow-hidden cursor-pointer relative"
+            className="min-w-[260px] h-[150px] flex-shrink-0 rounded-lg overflow-hidden cursor-pointer relative z-0"
             onClick={() => onImageClick?.(image)}
           >
             {!imgErrors[index] ? (
@@ -59,7 +60,7 @@ const InlineImageList = ({ images, onImageClick }: InlineImageListProps) => {
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center bg-gray-800">
-                <p className="text-white text-sm p-4 text-center">图片加载失败</p>
+                <p className="text-white text-sm p-4 text-center">Loaded failed</p>
               </div>
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>

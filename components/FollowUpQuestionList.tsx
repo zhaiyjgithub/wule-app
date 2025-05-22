@@ -11,8 +11,8 @@ interface FollowUpQuestionListProps {
 
 const FollowUpQuestionList = ({ questions, onQuestionClick }: FollowUpQuestionListProps) => {
   return (
-    <div className="w-full mt-8">
-      <div className="flex items-center gap-2 border-b border-white/10 pb-3">
+    <div className="w-full">
+      <div className="flex items-center gap-2 border-b border-white/10 pb-4">
        <ChartNoAxesGantt size={24} className="text-white" />
         <h1 className="text-3xl font-medium text-white">Related</h1>
       </div>

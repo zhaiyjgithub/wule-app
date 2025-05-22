@@ -62,7 +62,7 @@ const Searchbar = ({ onSearch, isLoading }: SearchbarProps) => {
                     setIsMultiline(target.scrollHeight > 24);
                 }}
                 onKeyDown={(e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
+                    if (!isLoading && e.key === 'Enter' && !e.shiftKey) {
                         e.preventDefault();
                         handleSearch();
                     }
