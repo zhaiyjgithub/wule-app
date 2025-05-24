@@ -8,12 +8,5 @@
   },
   "env": {
     "NODE_ENV": "production"
-  },
-  "redirects": [
-    {
-      "source": "/api/:path*",
-      "destination": "/api/:path*",
-      "permanent": false
-    }
-  ]
+  }
 } 
