@@ -4,7 +4,7 @@ import Searchbar from "../../../components/Searchbar";
 import { AiResult, Message } from "../../../components/ChatComponent";
 import ChatComponent from "../../../components/ChatComponent";
 import { useState, useRef, useEffect } from "react";
-import axios from "axios";
+import { api } from "../../../lib/api";
 
 const Home = () => {
     const [messages, setMessages] = useState<Message[]>([]);
@@ -16,16 +16,7 @@ const Home = () => {
         console.log("fetchData...");
         setIsLoading(true);
         try {
-            const response = await axios.post('/api/ask',
-                { question: question },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    timeout: 300000 // 5分钟超时
-                }
-            );
-            const data = response.data;
+            const data = await api.ask(question);
             console.log(data);
             return data;
         } catch (error) {
@@ -35,6 +26,30 @@ const Home = () => {
             setIsLoading(false);
         }
     }
+
+    // 示例：获取用户信息的函数
+    const fetchUser = async (userId: string) => {
+        try {
+            const userData = await api.getUser(userId);
+            console.log('用户数据:', userData);
+            return userData;
+        } catch (error) {
+            console.error("获取用户信息失败:", error);
+            return null;
+        }
+    };
+
+    // 示例：更新用户信息的函数
+    const updateUserInfo = async (userData: any) => {
+        try {
+            const result = await api.updateUser(userData);
+            console.log('用户更新成功:', result);
+            return result;
+        } catch (error) {
+            console.error("更新用户信息失败:", error);
+            return null;
+        }
+    };
 
     const handleSearch = async (query: string) => {
         // Add user message
