@@ -4,7 +4,6 @@ import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { InlineImage } from './ChatComponent';
-import Sticky from 'react-sticky-el';
 
 interface InlineImageListProps {
   images: InlineImage[];

@@ -5,21 +5,30 @@ import { API_CONFIG } from './config';
 export const apiCall = async (
   endpoint: string, 
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET',
-  data?: any
+  data?: unknown
 ) => {
   try {
     const url = API_CONFIG.getApiUrl(endpoint);
     console.log(`API调用: ${method} ${url}`);
     
-    const config = {
+    const config: {
+      method: string;
+      url: string;
+      timeout: number;
+      headers: Record<string, string>;
+      data?: unknown;
+    } = {
       method,
       url,
       timeout: 300000, // 5分钟超时
       headers: {
         'Content-Type': 'application/json',
       },
-      ...(data && { data }),
     };
+
+    if (data) {
+      config.data = data;
+    }
 
     const response = await axios(config);
     return response.data;
@@ -39,7 +48,7 @@ export const api = {
   getUser: (userId: string) => 
     apiCall(`/getUser?userId=${userId}`, 'GET'),
     
-  updateUser: (userData: any) => 
+  updateUser: (userData: Record<string, unknown>) => 
     apiCall('/updateUser', 'PUT', userData),
     
   // 可以继续添加更多API方法

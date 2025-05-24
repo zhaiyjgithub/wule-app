@@ -67,7 +67,7 @@ async function handleRequest(
         if (body) {
           requestOptions.body = body;
         }
-      } catch (error) {
+      } catch {
         console.log('No request body or invalid JSON');
       }
     }
