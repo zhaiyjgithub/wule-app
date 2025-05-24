@@ -1,10 +1,9 @@
 {
-  "name": "wule-app",
   "version": 2,
   "framework": "nextjs",
   "functions": {
     "app/api/proxy/[...path]/route.ts": {
-      "maxDuration": 300
+      "maxDuration": 60
     }
   },
   "env": {

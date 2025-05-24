@@ -57,7 +57,7 @@ async function handleRequest(
           'authorization': request.headers.get('authorization')!
         }),
       },
-      signal: AbortSignal.timeout(300000), // 5分钟超时
+      signal: AbortSignal.timeout(55000), // 55秒超时，留给 Vercel 5秒缓冲
     };
 
     // 如果有请求体，添加到选项中
