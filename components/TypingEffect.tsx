@@ -24,7 +24,7 @@ const TypingEffect: React.FC<TypingEffectProps> = ({ text, onComplete }) => {
     }, 50); // 控制打字速度
 
     return () => clearInterval(interval);
-  }, [text, onComplete]);
+  }, [text]);
 
   return <p className="text-white pr-2">{displayedText}</p>;
 };
