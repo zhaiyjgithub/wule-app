@@ -20,7 +20,7 @@ export const apiCall = async (
     } = {
       method,
       url,
-      timeout: 55000, // 55秒超时
+      timeout: 120000, //2分钟超时
       headers: {
         'Content-Type': 'application/json',
       },
