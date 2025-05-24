@@ -22,7 +22,7 @@ const Home = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    timeout: 120000 // 2分钟超时
+                    timeout: 300000 // 5分钟超时
                 }
             );
             const data = response.data;
