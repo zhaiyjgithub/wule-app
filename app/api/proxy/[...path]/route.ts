@@ -36,8 +36,23 @@ async function handleRequest(
   method: string
 ) {
   try {
+    console.log('代理路由调用 - params:', params);
+    console.log('代理路由调用 - path array:', params.path);
+    console.log('代理路由调用 - request URL:', request.url);
+    
+    // 验证参数
+    if (!params || !params.path || !Array.isArray(params.path)) {
+      console.error('无效的路径参数:', params);
+      return NextResponse.json(
+        { error: 'Invalid path parameters' }, 
+        { status: 400 }
+      );
+    }
+    
     // 构建后端API路径
     const apiPath = params.path.join('/');
+    console.log('API路径:', apiPath);
+    
     const backendUrl = `${BACKEND_BASE_URL}/${apiPath}`;
     
     // 获取查询参数
@@ -64,6 +79,7 @@ async function handleRequest(
     if (method !== 'GET' && method !== 'DELETE') {
       try {
         const body = await request.text();
+        console.log('请求体:', body);
         if (body) {
           requestOptions.body = body;
         }
@@ -73,7 +89,9 @@ async function handleRequest(
     }
 
     // 发送请求到后端
+    console.log('发送请求到后端...');
     const response = await fetch(finalUrl, requestOptions);
+    console.log('后端响应状态:', response.status);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -81,6 +99,7 @@ async function handleRequest(
 
     // 获取响应数据
     const data = await response.json();
+    console.log('后端响应数据:', data);
     
     return NextResponse.json(data);
   } catch (error) {
