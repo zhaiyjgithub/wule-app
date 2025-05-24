@@ -1,0 +1,21 @@
+{
+  "name": "wule-app",
+  "version": 2,
+  "framework": "nextjs",
+  "functions": {
+    "app/api/proxy/[...path]/route.ts": {
+      "maxDuration": 300
+    }
+  },
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "regions": ["hkg1", "sin1"],
+  "redirects": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/:path*",
+      "permanent": false
+    }
+  ]
+} 
