@@ -204,7 +204,7 @@ const Home = () => {
     </div>
 
     return (
-        <section className="flex flex-col items-center justify-center h-full px-4 lg:px-0 gap-y-4">
+        <section className="flex flex-col items-center justify-center h-full px-4 pb-4 lg:px-0 gap-y-4">
             {messages.length === 0 ? $solo :
                 <div
                     ref={messagesContainerRef}

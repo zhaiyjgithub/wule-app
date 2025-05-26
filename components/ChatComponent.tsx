@@ -55,9 +55,9 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ messages, onTypingEnd, on
                 return (
                     <div key={msg.id} className="w-full min-h-full">
                         {msg.sender === "ai" ? (
-                            <div className="w-full flex flex-col items-start gap-y-8 border-b border-white/10 z-10 pb-4 content-layer">
+                            <div className="w-full flex flex-col items-start gap-y-4 border-b border-white/10 z-10 pb-4 content-layer">
                                 <div className="w-full flex flex-col items-start gap-y-4">
-                                    <ReferenceList references={references} />
+                                    {references.length > 0 && <ReferenceList references={references} />}
                                     {msg.aiContent?.inline_images?.length > 0 && (
                                         <InlineImageList
                                             images={msg.aiContent.inline_images}

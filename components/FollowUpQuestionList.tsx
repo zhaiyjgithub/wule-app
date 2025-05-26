@@ -11,7 +11,7 @@ interface FollowUpQuestionListProps {
 const FollowUpQuestionList = ({ questions, onQuestionClick }: FollowUpQuestionListProps) => {
   return (
     <div className="w-full">
-      <div className="flex items-center gap-2 mb-3">
+      <div className="flex items-center gap-2 mt-3 mb-2">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400">
           <line x1="3" y1="12" x2="5" y2="12"></line>
           <line x1="19" y1="12" x2="21" y2="12"></line>
