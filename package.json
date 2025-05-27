@@ -9,7 +9,8 @@
     "lint": "next lint",
     "deploy": "npm run build && git add . && git commit -m \"deploy: update for production\" && git push origin main && vercel deploy --prod",
     "deploy:quick": "git add . && git commit -m \"quick deploy\" && git push origin main && vercel deploy --prod",
-    "vercel:only": "vercel deploy --prod"
+    "vercel:only": "vercel deploy --prod",
+    "deploy:cloudrun:dev": "./deploy-cloudrun.sh"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
